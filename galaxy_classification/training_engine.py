@@ -27,22 +27,15 @@ def load_data(h5_file='../data/Galaxy10_DECals.h5'):
         labels = np.array(F['ans'])
     return images, labels
 
-def create_splits(dataset, splits_file=None):
-    if splits_file and os.path.exists(splits_file):
-        with open(splits_file, 'r') as f:
-            splits = json.load(f)
-        train_dataset = Subset(dataset, splits["train"])
-        val_dataset = Subset(dataset, splits["val"])
-        test_dataset = Subset(dataset, splits["test"])
-    else:
-        dataset_size = len(dataset)
-        train_size = int(0.7 * dataset_size)
-        val_size = int(0.15 * dataset_size)
-        test_size = dataset_size - train_size - val_size
-        train_dataset, val_dataset, test_dataset = random_split(
-            dataset, [train_size, val_size, test_size],
-            generator=torch.Generator().manual_seed(42)
-        )
+def create_splits(dataset, seed=42):
+    dataset_size = len(dataset)
+    train_size = int(0.7 * dataset_size)
+    val_size = int(0.15 * dataset_size)
+    test_size = dataset_size - train_size - val_size
+    train_dataset, val_dataset, test_dataset = random_split(
+        dataset, [train_size, val_size, test_size],
+        generator=torch.Generator().manual_seed(seed)
+    )
     return train_dataset, val_dataset, test_dataset
 
 def main(raw=True):
@@ -50,8 +43,8 @@ def main(raw=True):
     print("Using device:", device)
     
     # Instantiate the model and move to GPU.
-    model = SimpleViT(num_classes=10).to(device)
-    model_name = 'simple_vit'
+    model = PowerfulCNN(num_classes=10).to(device)
+    model_name = 'powerful_cnn'
     
     # Create directories if not already present
     os.makedirs("models", exist_ok=True)
@@ -81,9 +74,8 @@ def main(raw=True):
     
     dataset = GalaxyDataset(images, labels, transform=transform)
     
-    # Create (or load) data splits - optionally, provide your splits file.
-    splits_file = 'data/splits/indices.json'  # adjust path as needed
-    train_dataset, val_dataset, test_dataset = create_splits(dataset, splits_file)
+    # Create data splits
+    train_dataset, val_dataset, test_dataset = create_splits(dataset, seed=42)
     
     train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True, num_workers=4, pin_memory=True)
     val_loader = DataLoader(val_dataset, batch_size=64, shuffle=False, num_workers=4, pin_memory=True)
