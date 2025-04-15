@@ -136,13 +136,8 @@ body {
   padding: 0px 40px;
 }
 
-.features {
-  columns: 2;
-  -webkit-columns: 2;
-  -moz-columns: 2;
-  list-style-position: inside;
-  padding: 0;
-  margin: 20px;
+.references {
+  list-style-type: none;
 }
 
 footer {
@@ -176,16 +171,6 @@ footer {
   color: #A855F7;
 }
 
-.masthead h2 {
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
-}
-
-.masthead p {
-  font-size: 0.875rem;
-  color: #94a3b8;
-}
-
 .chart-container {
   background-color: white;
   border-radius: 12px;
@@ -195,10 +180,6 @@ footer {
   max-width: 1000px;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
   transition: transform 0.3s ease;
-}
-
-.chart-container:hover {
-  transform: scale(1.01);
 }
 
 .chart-title {
@@ -254,14 +235,4 @@ footer {
   text-align: center;
   color: #0F172A;
   max-width: 740px;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-label {
-  font-weight: 600;
-  display: block;
-  margin-bottom: 0.3rem;
 }
