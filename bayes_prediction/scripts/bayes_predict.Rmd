@@ -1,0 +1,128 @@
+---
+title: "ds4420_final"
+author: "Benjamin Ecsedy"
+output: html_document
+---
+```{r}
+# load data
+data <- read.csv("Buzzard_DC1.csv")
+```
+
+```{r}
+# load data
+data <- read.csv("Buzzard_DC1.csv")
+
+# create polynomial cross features up to second degree
+X_raw <- data[, c("u", "g", "r", "i", "z", "y")]
+X_poly <- cbind(1, poly(scale(X_raw), degree = 2))
+
+# separating train and test data
+train_indices <- sample(1:nrow(data), size = 0.8 * nrow(data))
+X_train <- X_poly[train_indices, ]
+X_test <- X_poly[-train_indices, ]
+
+y_mass <- data$log.mass
+y_z <- data$redshift
+
+y_mass_train <- y_mass[train_indices]
+y_mass_test <- y_mass[-train_indices]
+
+y_z_train <- y_z[train_indices]
+y_z_test <- y_z[-train_indices]
+```
+
+```{r}
+# initialize hyperparameters, assume no effect of features on redshift
+# and high uncertainty in this effect
+mu0 <- rep(0, ncol(X_train))
+Sigma0 <- diag(1e3, ncol(X_train))
+sigma2 <- 0.01
+
+# posterior distribution
+compute_posterior <- function(X, y, mu0, Sigma0, sigma2) {
+  Sigma_n_inv <- solve(Sigma0) + t(X) %*% X / sigma2
+  Sigma_n <- solve(Sigma_n_inv)
+  mu_n <- Sigma_n %*% (solve(Sigma0) %*% mu0 + t(X) %*% y / sigma2)
+  list(mu_n = mu_n, Sigma_n = Sigma_n)
+}
+
+# apply posterior to log mass and redshift
+posterior_mass <- compute_posterior(X_train, y_mass_train, mu0, Sigma0, sigma2)
+w_mass <- posterior_mass$mu_n
+
+posterior_z <- compute_posterior(X_train, y_z_train, mu0, Sigma0, sigma2)
+w_z <- posterior_z$mu_n
+```
+
+```{r}
+predict_bayes <- function(X, w, Sigma_n) {
+  X <- as.matrix(X)
+  
+  # calculate prediction mean and variance
+  y_pred_mean <- X %*% w
+  y_pred_var <- rowSums((X %*% Sigma_n) * X)
+  
+  list(mean = y_pred_mean, sd = sqrt(y_pred_var))
+}
+```
+
+```{r}
+pred_mass <- predict_bayes(X_test, w_mass, posterior_mass$Sigma_n)
+
+plot(
+  y_mass_test, pred_mass$mean,
+  xlab = "True Galaxy Mass",
+  ylab = "Predicted Galaxy Mass",
+  main = "Bayesian Linear Mass Prediction with Normal Prior",
+  col = "black",
+)
+abline(0, 1, col = "red")
+legend("bottomright",           
+       legend = "Ideal Prediction Line",
+       col = "red",
+       lwd = 2,
+       bty = "n"
+       )
+```
+
+```{r}
+cor(y_mass_test, pred_mass$mean)
+```
+
+```{r}
+posterior_mass$mu_n
+```
+
+```{r}
+pred_z <- predict_bayes(X_test, w_z, posterior_z$Sigma_n)
+
+plot(
+  y_z_test, pred_z$mean,
+  xlab = "True Galaxy Redshift",
+  ylab = "Predicted Galaxy Redshift",
+  main = "Bayesian Linear Redshift Prediction with Normal Prior",
+  col = "black",
+  ylim = c(-1, 2)
+)
+abline(0, 1, col = "red")
+legend("bottomleft",           
+       legend = "Ideal Prediction Line",
+       col = "red",
+       lwd = 2,
+       bty = "n"
+       )
+```
+
+```{r}
+cor(y_z_test, pred_z$mean)
+```
+
+```{r}
+posterior_z$mu_n
+```
+
+```{r}
+# saving data to create visualization in python
+# NOT part of the machine learning
+write.csv(posterior_z$mu_n, "model_means.csv")
+```
