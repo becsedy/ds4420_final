@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DS4420 Final Project</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="index.html" id="navbar__logo">
+        <span class="logo-long">🌌</span>
+      </a>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="index.html" class="navbar__links">Project Home</a>
+        </li>
+        <li class="navbar__item">
+          <a href="cnn.html" class="navbar__links">CNN Galaxy Classification</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <section class="main">
+    <div class="main__container">
+      <div class="main__content">
+        <h1 style="text-align:center;">A Machine-Learning Approach to Galaxy Morphology and Parameter Estimation​</h1>
+        <h2 style="text-align:center;">Yash R. Bhora, Benjamin Ecsedy</h2>
+        <br />
+
+        <h3>Motivation</h3>
+          <p>
+
+          </p>
+        <br />
+
+        <h3>Dataset</h3>
+          <p>
+            The data was obtained from two different source: galaxy image data
+            was obtained from the the Galaxy DECaLS Dataset, containing 17736 
+            256x256 pixels colored galaxy images (g, r and z band) for 10
+            morphologies shown below. Additionally, galaxy magnitude simulation
+            data was obtained from
+            from the Rubin Observatory of galaxy magnitude measurements of
+            different color filters in six astronomical bands using the
+            Buzzard V-1.0 simulation.
+          </p>
+
+          <br/>
+
+          <div class="image-container">
+            <div class="graph-container">
+              <h4>Example Galaxy Images</h4>
+              <img src="examples.png" height="250px"/>
+    
+              <h5>
+                Example images from each morphological class, showcasing the
+                diverse appearances of galaxies used for training.
+              </h5>
+            </div>
+
+            <br/>
+
+            <div class="spectrum-container">
+              <div class="graph-container">
+                <h4>Filter Spectra</h4>
+                <img src="spectra.png" height="400px"/>
+      
+                <h5>
+                  Wavelength transmission for each of the <i>u</i>, <i>g</i>,
+                  <i>r</i>, <i>i</i>, <i>z</i>, and <i>y</i> filters.
+                </h5>
+              </div>
+
+        <br />
+        
+
+        <h3>Goals</h3>
+          <p>
+            <b>Primary goal</b>: Evaluate the impact of data augmentation and model
+            complexity on classification and prediction.
+            
+            As such, the main tasks at hand were to:
+            
+            <ol>
+              <li>
+                Compare performance using “raw” images vs enhanced with data
+                augmentation.
+              </li>
+              <li>
+                Assess performance gains among three CNN architectures:
+                SimpleCNN, PowerfulCNN, and EfficientNet_B2
+                (transfer-learning).
+              </li>
+              <li>
+                Determine the predictive power of a simplified statistical
+                model on astronomical data.
+              </li>
+            </ol>
+          </p>
+        <br />
+
+        <h3>References</h3>
+        <p>
+
+        </p>
+      <br />
+  </section>
+
+  <footer>
+    <div class="footer-container">
+      <div class="masthead">
+        <h2>About</h2>
+        <p>All rights reserved</p>
+      </div>
+      <div class="footer-links">
+        <ul>
+          <li><a href="mailto:bhora.y@northeastern.edu">📧 Yash's Email</a></li>
+          <li><a href="mailto:ecsedy.b@northeastern.edu">📧 Ben's Email</a></li>
+        </ul>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </footer>
+</body>
+</html>

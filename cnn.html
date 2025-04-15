@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DS4420 Final Project</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar__container">
+      <a href="index.html" id="navbar__logo">
+        <span class="logo-long">🌌</span>
+      </a>
+      <ul class="navbar__menu">
+        <li class="navbar__item">
+          <a href="index.html" class="navbar__links">Project Home</a>
+        </li>
+        <li class="navbar__item">
+          <a href="cnn.html" class="navbar__links">CNN Galaxy Classification</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="main">
+    <div class="main__container">
+      <div class="graph-container">
+        <div class="network-container">
+          <h2>CNN Accuracy and Confusion Matrix</h2>
+
+          <label for="network">Network Type:</label>
+            <select id="network">
+              <option value="simple_cnn">SimpleCNN</option>
+              <option value="powerful_cnn">PowerfulCNN</option>
+              <option value="efficient_net">EfficientNet</option>
+            </select>
+
+          <label for="input">Input Data:</label>
+            <select id="input">
+              <option value="raw">Raw</option>
+              <option value="augmented">Augmented</option>
+            </select>
+
+          <br />
+
+          <img 
+            id="accuracy-img"
+            src="galaxy_classification/plots/training_validation_accuracy_curves_simple_cnn_raw.png"
+            height="300px"  
+          >
+
+          <img 
+            id="conf-mat-img"
+            src="galaxy_classification/plots/confusion_matrix_simplecnn_raw.png"
+            height="400px"  
+          >
+
+          <script>
+            const networkSelect = document.getElementById("network");
+            const inputSelect = document.getElementById("input");
+            const accuracyImg = document.getElementById("accuracy-img");
+            const confMatImg = document.getElementById("conf-mat-img")
+        
+            function updateImage() {
+              const network = networkSelect.value;
+              const input = inputSelect.value;
+
+              accuracyImg.setAttribute("src", "galaxy_classification/plots/training_validation_accuracy_curves_" 
+              + `${network.toLowerCase()}_${input.toLowerCase()}.png`);
+
+              confMatImg.setAttribute("src", "galaxy_classification/plots/confusion_matrix_" 
+              + `${network.toLowerCase().replace("_", "")}_${input.toLowerCase()}.png`);
+
+            }
+          
+            networkSelect.addEventListener("change", updateImage);
+            inputSelect.addEventListener("change", updateImage);
+          </script>
+          
+          <p>
+
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
