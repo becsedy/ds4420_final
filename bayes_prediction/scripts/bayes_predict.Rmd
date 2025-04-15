@@ -84,9 +84,23 @@ legend("bottomright",
        bty = "n"
        )
 ```
+```{r}
+mse <- function(y_test, y_pred) {
+  y_test <- as.numeric(y_test)
+  y_pred <- as.numeric(y_pred)
+  
+  # Compute squared differences and mean
+  mse <- sum((y_test - y_pred)^2) / length(y_pred)
+  return(mse)
+}
+```
 
 ```{r}
 cor(y_mass_test, pred_mass$mean)
+```
+
+```{r}
+mse(y_mass_test, pred_mass$mean)
 ```
 
 ```{r}
@@ -115,6 +129,10 @@ legend("bottomleft",
 
 ```{r}
 cor(y_z_test, pred_z$mean)
+```
+
+```{r}
+mse(y_z_test, pred_z$mean)
 ```
 
 ```{r}
