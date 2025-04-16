@@ -1,6 +1,4 @@
-import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
 class PowerfulCNN(nn.Module):
     def __init__(self, num_classes=10):
@@ -31,7 +29,6 @@ class PowerfulCNN(nn.Module):
             nn.ReLU(inplace=True),
             nn.MaxPool2d(2)   # 64 -> 32
         )
-        # Instead of flattening 128x32x32, we reduce it to 128x1x1
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
         self.classifier = nn.Sequential(
             nn.Dropout(0.4),

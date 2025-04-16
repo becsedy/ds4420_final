@@ -1,19 +1,19 @@
 import os
 import sys
-# Append the parent directory (project root) to the sys.path
+
+# Append the parent directory (project root) to the sys.path for imports
 project_root = os.path.abspath(os.path.join(os.getcwd(), '..'))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
 import time
 import csv
-import json
 import h5py
 import numpy as np
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import DataLoader, Subset, random_split
+from torch.utils.data import DataLoader, random_split
 from galaxy_dataset import GalaxyDataset
 from models.simple_cnn import SimpleCNN
 from models.powerful_cnn import PowerfulCNN
@@ -91,7 +91,7 @@ def main(raw=True):
     best_val_acc = 0.0
     best_model_path = f"models/best_{model_name}_{data_type}.pth"
 
-    # Write header initially (if starting a new log file)
+    # Write header for log file
     with open(f"logs/experiment_{model_name}_{data_type}.csv", mode='w', newline='') as f:
         c_writer = csv.writer(f)
         c_writer.writerow(["epoch", "train_loss", "train_acc", "val_loss", "val_acc"])

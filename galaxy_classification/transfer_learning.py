@@ -1,4 +1,3 @@
-# src/train.py
 import csv
 import os
 import sys
@@ -16,7 +15,7 @@ project_root = os.path.abspath(os.path.join(os.getcwd(), '..'))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-from datasets.galaxy_dataset import GalaxyDataset
+from galaxy_dataset import GalaxyDataset
 import torchvision.transforms as transforms
 from torch.utils.tensorboard import SummaryWriter
 from models.efficient_net import create_efficientnet
@@ -99,7 +98,7 @@ def main(raw=True, model_type='efficientnet'):
     best_val_acc = 0.0
     best_model_path = f"models/best_{model_name}_{data_type}.pth"
 
-    # Write header initially (if starting a new log file)
+    # Write header for log file
     with open(f"logs/experiment_{model_name}_{data_type}.csv", mode='w', newline='') as f:
         c_writer = csv.writer(f)
         c_writer.writerow(["epoch", "train_loss", "train_acc", "val_loss", "val_acc"])
