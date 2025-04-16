@@ -21,8 +21,11 @@ We investigate how model complexity and data augmentation impact galaxy image cl
 
 ## Dataset
 
-- **Galaxy10 DECaLS**: A curated dataset of galaxy images with morphology labels by Lueng & Bovy, 2019.
-🔗 [Download from Zenodo](https://zenodo.org/records/10845026/files/Galaxy10_DECals.h5) <!-- <- update if needed -->
+- **Galaxy10 DECaLS** (for image classification)  
+🔗 [Download from Zenodo](https://zenodo.org/records/10845026/files/Galaxy10_DECals.h5)
+
+- **Galaxy Mass Prediction** (for Bayesian regression)  
+  🔗 [Download from Kaggle](https://www.kaggle.com/datasets/mexwell/galaxy-mass-prediction/data)
 
 ## Authors
 
