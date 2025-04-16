@@ -19,7 +19,7 @@ We investigate how model complexity and data augmentation impact galaxy image cl
 - Built a degree-2 polynomial regression model with a Gaussian prior to estimate redshift and stellar mass
 - Computed posterior distributions to quantify prediction uncertainty
 
-## Dataset
+## Datasets
 
 - **Galaxy10 DECaLS** (for image classification)  
 🔗 [Download from Zenodo](https://zenodo.org/records/10845026/files/Galaxy10_DECals.h5)
